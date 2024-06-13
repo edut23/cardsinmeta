@@ -1,39 +1,48 @@
-import { createItems } from "../../api/createItems"
-import { updateItems } from "../../api/updateItems"
+import { useEffect, useState } from "react"
+import { tradeCardsAPI } from "../../api/tradeCards"
 import { useMyContext } from "../../context/myContext"
 import useList from "../useList"
+import useMyCards from "../useMyCards"
+import { getItems } from "../../api/getItems"
 
 interface List {
-    id: number,
+    id: string,
     name: string,
     description: string,
     imageUrl: string,
     createdAt: string
 }
 
-const useModal = (show: boolean | number) => {
-    const {fetchData} = useList();
-    const {toDoList, setModal} = useMyContext();
-    const correctItem = toDoList.find(item => item.id === show);
-    const item = {name: correctItem?.name ?? '', description: correctItem?.description ?? '', imageUrl: correctItem?.imageUrl ?? ''}
+const useModal = (show: boolean | string) => {
+    const [tradeCards, setTradeCards] = useState<List[]>([]);
+    const {setModal} = useMyContext();
+    const {myCards} = useMyCards();
+    const offeringCard = myCards.find(item => item.id === show);
 
-    const createItem = async(values: List) => {
-        if(typeof show === 'boolean'){
-            try{
-                await createItems(values);
-                alert("Item created");
-                await fetchData();
-                setModal(false);
-            }catch(error){
-                console.error(error)
+    const fetchData = async () => {
+        try{
+            const response = await getItems(72, 1);
+            if(!(response instanceof Error)){
+                setTradeCards(response);
             }
+        }catch(error){
+            console.error(error)
+            alert(error)
         }
     }
 
-    const updateItem = async(values: List) => {
-        if(typeof show === 'number'){
+
+    useEffect(() => {
+        if(typeof show === "string")
+            fetchData();
+        console.log(show)
+    }, [show])
+
+
+    const tradeFunc = async(cardId: string) => {
+        if(typeof show === 'string'){
             try{
-                await updateItems(values, show);
+                await tradeCardsAPI(show, cardId)
                 alert("Item updated");
                 await fetchData();
                 setModal(false);
@@ -43,7 +52,7 @@ const useModal = (show: boolean | number) => {
         }
     }
 
-    return {item, createItem, updateItem}
+    return {offeringCard, tradeCards, tradeFunc}
 }
 
 export default useModal;

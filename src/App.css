@@ -38,6 +38,7 @@
   min-height: 40%;
   padding: 1.5em;
   margin: 0 5%;
+  max-height: 100vh;
 
   h2{
     margin-top: 0;
@@ -74,6 +75,8 @@
   grid-template-columns: 1fr 1fr 1fr;
   gap: 25px;
 
+  margin-bottom: 0.5em;
+
   .card{
     display: flex;
     flex-direction: column;
@@ -98,11 +101,30 @@
     background-color: #FFFFFF;
     border-radius: 8px;
     border: solid #000000 1px;
-    max-width: 60%;
+    min-width: 60%;
+    max-width: 75%;
     padding: 2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 
     h2{
       margin-top: 0;
+    }
+
+    .tradeCardsDiv{
+      max-height: 36vh;
+      overflow-y: scroll;
+      text-align: -webkit-center;
+
+      .card{
+        max-width: min-content;
+        margin-bottom: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
     }
   }
 }

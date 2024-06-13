@@ -1,14 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useMyContext } from "../../context/myContext";
 import { getItems } from "../../api/getItems";
-import { removeItemsAPI } from "../../api/removeItems";
+import { addCardAPI } from "../../api/addCard";
 
 const useList = () => {
     const {toDoList, setToDoList, setModal} = useMyContext();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const fetchData = async () => {
         try{
-            const response = await getItems(6, 1);
+            const response = await getItems(6, currentPage);
             if(!(response instanceof Error)){
                 setToDoList(response);
             }
@@ -18,11 +20,10 @@ const useList = () => {
         }
     }
 
-    const removeItem = async (id: number) => {
+    const addCard = async (id: string) => {
         try{
-            await removeItemsAPI(id);
-            alert("Item deleted")
-            fetchData();
+            await addCardAPI(id);
+            alert("Item added");
         }catch(error){
             console.error(error)
         }
@@ -30,10 +31,15 @@ const useList = () => {
 
     useEffect(() => {
         fetchData();
-    },[]);
+        setIsLoaded(false)
+    },[currentPage]);
+
+    useEffect(() => {
+        console.log(isLoaded)
+    }, [isLoaded])
     
 
-    return { toDoList, removeItem, setModal, fetchData }
+    return { toDoList, addCard, currentPage, setCurrentPage, fetchData, isLoaded, setIsLoaded }
 }
 
 export default useList;

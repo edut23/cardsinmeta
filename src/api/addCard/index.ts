@@ -1,15 +1,8 @@
 import { Api } from "../axios-config";
 
-interface List {
-    id: number,
-    name: string,
-    description: string,
-    imageUrl: string,
-    createdAt: string
-}
-export const updateItems = async (item: List, id: number): Promise<List[] | Error> => {
+export const addCardAPI = async (item: string): Promise<string | Error> => {
     try{
-        const { data } = await Api.put(`/items/${id}`, item);
+        const { data } = await Api.post('/me/cards', {"cardIds": [item]});
         
         if(data)
             return data;

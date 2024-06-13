@@ -5,6 +5,7 @@ import Login from './pages/login';
 import Register from './pages/register';
 import List from './pages/list';
 import Modal from './pages/modal';
+import MyCards from './pages/myCards';
 
 function App() {
   const {modal} = useMyContext();
@@ -21,6 +22,7 @@ function App() {
             <Route path="/" element={localStorage.getItem("token") === null ? <Login/> : <Navigate to="/list" replace/>}/>
             <Route path="/register" element={<Register/>}/>
             <Route path="/list" element={localStorage.getItem("token") !== null ? <List/> : <Navigate to="/" replace/>}/>
+            <Route path="/mycards" element={<MyCards/>}/>
           </Routes>
         </div>
         {modal && <Modal show={modal}/>}

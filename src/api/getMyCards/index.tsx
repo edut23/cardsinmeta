@@ -1,16 +1,16 @@
 import { Api } from "../axios-config";
 
 interface List {
-    id: number,
+    id: string,
     name: string,
     description: string,
     imageUrl: string,
     createdAt: string
 }
 
-export const createItems = async (item: List): Promise<List[] | Error> => {
+export const getMyCardsAPI = async (): Promise<List[] | Error> => {
     try{
-        const { data } = await Api.post('/items', item);
+        const { data } = await Api.get(`/me/cards`);
         
         if(data)
             return data;

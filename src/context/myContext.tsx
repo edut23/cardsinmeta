@@ -1,7 +1,7 @@
 import React, { createContext, useState, ReactNode, useContext, useMemo, useEffect } from 'react';
 
 interface List {
-  id: number,
+  id: string,
   name: string,
   description: string,
   imageUrl: string,
@@ -15,8 +15,8 @@ interface MyContextType {
     setUser: React.Dispatch<React.SetStateAction<string>>,
     toDoList: List[],
     setToDoList: React.Dispatch<React.SetStateAction<List[]>>,
-    modal: boolean | number,
-    setModal: React.Dispatch<React.SetStateAction<boolean | number>>
+    modal: boolean | string,
+    setModal: React.Dispatch<React.SetStateAction<boolean | string>>
   }
   
   const defaultState: MyContextType = {
@@ -40,7 +40,7 @@ export const MyProvider: React.FC<MyProviderProps> = ({ children }) => {
     const [token, setToken] = useState<string>(localStorage.getItem("token") ?? '');
     const [user, setUser] = useState<string>('')
     const [toDoList, setToDoList] = useState<List[]>([]);
-    const [modal, setModal] = useState<boolean | number>(false);
+    const [modal, setModal] = useState<boolean | string>(false);
 
     useEffect(() => {
       if(token !== ''){
