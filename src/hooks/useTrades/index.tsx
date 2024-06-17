@@ -2,17 +2,44 @@ import { useEffect, useState } from "react";
 import { useMyContext } from "../../context/myContext";
 import { getItems } from "../../api/getItems";
 import { addCardAPI } from "../../api/addCard";
+import { getTrades } from "../../api/getTrades";
 
-const useList = () => {
-    const {toDoList, setToDoList, setModal} = useMyContext();
+interface Card {
+    id: string,
+    name: string,
+    description: string,
+    imageUrl: string,
+    createdAt: string
+}
+
+interface TradeCards {
+    id: string,
+    cardId: string,
+    tradeId: string,
+    type: string,
+    card: Card
+}
+
+interface Trades {
+    id: string,
+    userId: string,
+    createdAt: string,
+    user: {
+        name: string
+    },
+    tradeCards: TradeCards[]
+}
+
+const useTrades = () => {
+    const [trades, setTrades] = useState<Trades[]>([])
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoaded, setIsLoaded] = useState(false);
 
     const fetchData = async () => {
         try{
-            const response = await getItems(6, currentPage);
+            const response = await getTrades(6, currentPage)
             if(!(response instanceof Error)){
-                setToDoList(response);
+                setTrades(response);
             }
         }catch(error){
             console.error(error)
@@ -39,7 +66,7 @@ const useList = () => {
     }, [isLoaded])
     
 
-    return { toDoList, addCard, currentPage, setCurrentPage, fetchData, isLoaded, setIsLoaded }
+    return { trades, addCard, currentPage, setCurrentPage, fetchData, isLoaded, setIsLoaded }
 }
 
-export default useList;
+export default useTrades;

@@ -3,7 +3,7 @@ import useModal from "../../hooks/useModal";
 import { useMyContext } from "../../context/myContext";
 import Tooltip from "../../components/tooltip";
 import Pagination from "../../components/pagination";
-import useList from "../../hooks/useList";
+import useList from "../../hooks/useCards";
 
 interface ModalProps{
     show: boolean | string

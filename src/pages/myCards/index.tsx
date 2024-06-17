@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Tooltip from "../../components/tooltip";
-import useList from "../../hooks/useList";
+import useList from "../../hooks/useCards";
 import useMyCards from "../../hooks/useMyCards";
 import Loading from "../../components/loading";
 
@@ -27,7 +27,8 @@ const MyCards: React.FC = () => {
                 </>}
             </div>
             <button onClick={() => {localStorage.removeItem("token"); window.location.reload();}}>Exit</button>
-            <Link to="/list"><button>Cards</button></Link>
+            <Link to="/cards"><button>Cards</button></Link>
+            <Link to="/trades"><button>Trades</button></Link>
         </>
     )
 }

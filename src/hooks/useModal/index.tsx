@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { tradeCardsAPI } from "../../api/tradeCards"
 import { useMyContext } from "../../context/myContext"
-import useList from "../useList"
+import useList from "../useCards"
 import useMyCards from "../useMyCards"
 import { getItems } from "../../api/getItems"
 

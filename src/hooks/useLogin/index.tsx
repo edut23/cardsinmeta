@@ -19,7 +19,7 @@ interface LoginResponse {
 }
 
 const useLogin = () => {
-    const {setToken} = useMyContext();
+    const {setToken, setUser} = useMyContext();
     const navigate = useNavigate();
 
     const isLoginResponse = (response: any): response is LoginResponse => {
@@ -31,7 +31,9 @@ const useLogin = () => {
             const response: LoginResponse | Error = await loginApi(values.email, values.password);
             if(isLoginResponse(response)){
                 setToken(response?.token);
-                navigate("/list");
+                setUser(response?.user);
+                console.log(response)
+                navigate("/mycards");
                 window.location.reload();
             }
         }catch(error){

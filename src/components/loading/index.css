@@ -9,13 +9,15 @@
 
 .loading{
     display: flex;
-    margin: 1em;
+    width: 223px;
+    height: 310px;
     justify-content: center;
     align-items: center;
     animation: rotate 2s linear infinite;
 
 
     .loadingImg{
-        width: 70%;
+        width: 112px;
+        height: 155px;
     }
 }

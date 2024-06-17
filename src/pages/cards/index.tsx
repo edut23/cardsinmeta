@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import Tooltip from "../../components/tooltip";
-import useList from "../../hooks/useList";
+import useList from "../../hooks/useCards";
 import Pagination from "../../components/pagination";
 import Loading from "../../components/loading";
+import useCards from "../../hooks/useCards";
 
-const List: React.FC = () => {
-    const {toDoList, addCard, currentPage, setCurrentPage, isLoaded, setIsLoaded} = useList();
+const Cards: React.FC = () => {
+    const {toDoList, addCard, currentPage, setCurrentPage, isLoaded, setIsLoaded} = useCards();
 
     return(
         <>
@@ -32,8 +33,9 @@ const List: React.FC = () => {
             <Pagination currentPage={currentPage} onPageChange={setCurrentPage}/>
             <button onClick={() => {localStorage.removeItem("token"); window.location.reload();}}>Exit</button>
             <Link to="/mycards"><button>My Cards</button></Link>
+            <Link to="/trads"><button>Trades</button></Link>
         </>
     )
 }
 
-export default List;
+export default Cards;
